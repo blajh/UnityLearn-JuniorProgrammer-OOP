@@ -47,5 +47,5 @@ MonoBehaviour:
   groundTile: {fileID: 5821547916487499773, guid: a42b6f891a6228e44a39e33cb0882b0a, type: 3}
   sizeX: 20
   sizeY: 15
-  count: 5
+  count: 3
   size: 3

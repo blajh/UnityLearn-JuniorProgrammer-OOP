@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class GroundTile : MonoBehaviour
 {
     [SerializeField]
@@ -16,6 +16,7 @@ public class GroundTile : MonoBehaviour
     [SerializeField] private Type type;
     [SerializeField] private Material soilMaterial;
     [SerializeField] private Material waterMaterial;
+    [SerializeField] private Material sandMaterial;
 
     private Vector2Int coords;
 
@@ -25,11 +26,8 @@ public class GroundTile : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         coords.x = (int) transform.position.x;
         coords.y = (int) transform.position.z;
-    }
-
-    private void Update() {
-        SetMaterial();           
-    }
+        SetMaterial();
+    }    
 
     private void SetMaterial() {
         switch(type) {
@@ -44,9 +42,18 @@ public class GroundTile : MonoBehaviour
 
     public void SetType(Type type) {
         this.type = type;
+        SetMaterial();
+    }
+
+    public Type GetTileType() {
+        return type;
     }
 
     public Vector2Int GetCoords() {
         return coords;
+    }
+
+    public void Sand() {
+        meshRenderer.material = sandMaterial;
     }
 }

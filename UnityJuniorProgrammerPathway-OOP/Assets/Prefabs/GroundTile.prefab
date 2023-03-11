@@ -110,8 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06369a8d36604d6449cb552fffd96bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 0
-  sizey: 0
   type: 1
   soilMaterial: {fileID: 2100000, guid: 537d207a3ab7a52439401614127c5381, type: 2}
   waterMaterial: {fileID: 2100000, guid: 0d8d21c8ed5f0d847a1b304b8f4c4de7, type: 2}
+  sandMaterial: {fileID: 2100000, guid: c1f5aa28702381847aa06232d7a2b374, type: 2}

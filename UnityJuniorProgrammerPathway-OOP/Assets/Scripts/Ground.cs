@@ -5,8 +5,9 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class Ground : MonoBehaviour
 {
     [Header("Ground")]
@@ -24,6 +25,12 @@ public class Ground : MonoBehaviour
         groundTiles = new List<GameObject>();
         holes = new List<GameObject>();
         GenerateGround();
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     private void GenerateGround() {
@@ -63,22 +70,51 @@ public class Ground : MonoBehaviour
     private void MakeHolesBigger() {
         foreach (GameObject hole in holes){
             Vector2Int coords = hole.GetComponent<GroundTile>().GetCoords();
-            int startX = (int) Mathf.Clamp(coords.x - (size - 1) / 2, 0f, sizeX);
-            int startY = (int)Mathf.Clamp(coords.y - (size - 1) / 2, 0f, sizeY);
-            Debug.Log("X:" + startX + "   Y: "  + startY);
+            int startX = (int) Mathf.Clamp(coords.x - (size - 1) / 2, -1f, sizeX);
+            int startY = (int)Mathf.Clamp(coords.y - (size - 1) / 2, -1f, sizeY);            
 
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     int currentX = startX + i;
                     int currentY = startY + j;
 
-                    if (!(currentX < 0) && !(currentY < 0) && !(currentX > sizeX) && !(currentY > sizeY)) {
-                        Debug.Log("true");
+                    if (!(currentX < 0) && !(currentY < 0) && !(currentX > sizeX) && !(currentY > sizeY)) {                        
                         foreach (GameObject tile in groundTiles) {
-                            if (tile.GetComponent<GroundTile>().GetCoords() == new Vector2Int(startX + i, startY + j)) {
-                                tile.GetComponent<GroundTile>().SetType(GroundTile.Type.Water);
- 
-                                Debug.Log("set to water at X:" + currentX + "    Y:" + currentY);
+                            if (tile.GetComponent<GroundTile>().GetCoords() == new Vector2Int(currentX, currentY)) {
+                                tile.GetComponent<GroundTile>().SetType(GroundTile.Type.Water); 
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        CheckSand();
+    }
+
+    private void CheckSand() {
+        foreach (GameObject tile in groundTiles) {
+            CheckNeighbours(tile);
+        }
+    }
+
+    private void CheckNeighbours(GameObject hole) {        
+
+        Vector2Int coords = hole.GetComponent<GroundTile>().GetCoords();
+        int startX = (int)Mathf.Clamp(coords.x - 1, -1f, sizeX);
+        int startY = (int)Mathf.Clamp(coords.y - 1, -1f, sizeY);
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int currentX = startX + i;
+                int currentY = startY + j;
+
+                if (!(currentX < 0) && !(currentY < 0) && !(currentX > sizeX) && !(currentY > sizeY)) {
+                    foreach (GameObject tile in groundTiles) {
+                        if (tile.GetComponent<GroundTile>().GetCoords() == new Vector2Int(currentX, currentY)) {
+                            if (tile.GetComponent<GroundTile>().GetTileType() == GroundTile.Type.Water) {
+                                if (hole.GetComponent<GroundTile>().GetTileType() == GroundTile.Type.Soil) {
+                                    hole.GetComponent<GroundTile>().Sand();
+                                }
                             }
                         }
                     }
