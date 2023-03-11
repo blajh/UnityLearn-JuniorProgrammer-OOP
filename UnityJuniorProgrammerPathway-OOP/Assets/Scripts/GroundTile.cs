@@ -7,7 +7,7 @@ using UnityEngine;
 public class GroundTile : MonoBehaviour
 {
     [SerializeField]
-    private enum Type {
+    public enum Type {
         Water,
         Soil,
     }
@@ -17,11 +17,14 @@ public class GroundTile : MonoBehaviour
     [SerializeField] private Material soilMaterial;
     [SerializeField] private Material waterMaterial;
 
+    private Vector2Int coords;
 
     private MeshRenderer meshRenderer;
         
     private void Awake() {
         meshRenderer = GetComponent<MeshRenderer>();
+        coords.x = (int) transform.position.x;
+        coords.y = (int) transform.position.z;
     }
 
     private void Update() {
@@ -37,5 +40,13 @@ public class GroundTile : MonoBehaviour
                 meshRenderer.material = soilMaterial;
                 break;
         }
+    }
+
+    public void SetType(Type type) {
+        this.type = type;
+    }
+
+    public Vector2Int GetCoords() {
+        return coords;
     }
 }
