@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Carrot : Plant
 {
+    // INHERITANCE
 
     [SerializeField] private float lifetime = 10f;
     private float lifeTimer = 0f;
@@ -11,6 +12,8 @@ public class Carrot : Plant
     private void Update() {
         Decay();
     }
+
+    // POLYMORPHISM
 
     public override void Decay() {
         lifeTimer += Time.deltaTime;

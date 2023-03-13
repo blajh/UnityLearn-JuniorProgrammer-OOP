@@ -8,6 +8,8 @@ using UnityEngine;
 //[ExecuteInEditMode]
 public class GroundTile : MonoBehaviour
 {
+    // ENCAPSULATION
+
     [SerializeField]
     public enum Type {
         Water,
@@ -65,6 +67,8 @@ public class GroundTile : MonoBehaviour
                 break;
         }
     }
+
+    // ABSTRACTION
 
     public void SetType(Type type) {
         this.type = type;

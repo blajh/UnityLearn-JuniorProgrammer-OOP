@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 //[ExecuteInEditMode]
 public class Ground : MonoBehaviour
 {
+    // ENCAPSULATION
+
     [Header("Ground")]
     [SerializeField] private GroundTile groundTile;
     [SerializeField] private int sizeX;
@@ -34,6 +36,8 @@ public class Ground : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
+
+    // ABSTRACTION
 
     private void GenerateGround() {
         float tileSizeX = groundTile.gameObject.transform.localScale.x;

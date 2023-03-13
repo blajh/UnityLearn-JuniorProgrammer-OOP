@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Mouse : Animal
 {
+    // INHERITANCE
+
+    // POLYMORPHISM
+
     public override void Move() {
 
     }
