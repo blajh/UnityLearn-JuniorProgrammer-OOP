@@ -114,3 +114,8 @@ MonoBehaviour:
   soilMaterial: {fileID: 2100000, guid: 537d207a3ab7a52439401614127c5381, type: 2}
   waterMaterial: {fileID: 2100000, guid: 0d8d21c8ed5f0d847a1b304b8f4c4de7, type: 2}
   sandMaterial: {fileID: 2100000, guid: c1f5aa28702381847aa06232d7a2b374, type: 2}
+  plants:
+  - {fileID: 594835744890838641, guid: c889d414517ef0440af795a9cea782c5, type: 3}
+  - {fileID: 8740566873549109626, guid: 25dc78b7aea1101458d9d712b1dcdf2b, type: 3}
+  chanceTresholdPlant: 0.05
+  spawnTimePlant: 10

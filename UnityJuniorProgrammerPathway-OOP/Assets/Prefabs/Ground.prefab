@@ -49,3 +49,6 @@ MonoBehaviour:
   sizeY: 15
   count: 3
   size: 3
+  animals:
+  - {fileID: 7293043729628221491, guid: 22ca436b10eebbb48854c0447baf433c, type: 3}
+  initialAnimals: 5

@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +17,11 @@ public class Ground : MonoBehaviour
     [SerializeField] private int size;
     private List<GameObject> groundTiles;
     private List<GameObject> holes;
+
+    [Header("Animals")]
+    [SerializeField] private List<Animal> animals;    
+    [SerializeField] private int initialAnimals = 5;
+    private int animalsCount;
 
     private void Start() {
         groundTiles = new List<GameObject>();
@@ -117,6 +119,27 @@ public class Ground : MonoBehaviour
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        SpawnAnimals();
+    }
+
+    private void SpawnAnimals() {
+        while (animalsCount < initialAnimals) {
+            int randomX = UnityEngine.Random.Range(0, sizeX);
+            int randomY = UnityEngine.Random.Range(0, sizeY);
+
+            int count = animals.Count;
+            int randomAnimalIndex = (int) UnityEngine.Random.Range(0, count);
+
+            foreach (GameObject tile in groundTiles) {
+                if (tile.GetComponent<GroundTile>().GetCoords() == new Vector2Int(randomX, randomY)) {
+                    if (tile.GetComponent<GroundTile>().GetTileType() == GroundTile.Type.Soil) {
+                        Instantiate(animals[randomAnimalIndex].gameObject, tile.transform.position, Quaternion.identity);
+                        animalsCount++;
                     }
                 }
             }

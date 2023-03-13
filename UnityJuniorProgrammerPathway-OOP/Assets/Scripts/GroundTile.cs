@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 //[ExecuteInEditMode]
@@ -18,8 +20,15 @@ public class GroundTile : MonoBehaviour
     [SerializeField] private Material waterMaterial;
     [SerializeField] private Material sandMaterial;
 
-    private Vector2Int coords;
+    [Header("Plants")]
+    [SerializeField] private List<Plant> plants;
+    [SerializeField][Range(0f, 1f)] private float chanceTresholdPlant;
+    [SerializeField] private float spawnTimePlant = 10f;
+    private float timePassedPlant = 0f;
+    private GameObject plant;
+    private bool hasPlant;
 
+    private Vector2Int coords;
     private MeshRenderer meshRenderer;
         
     private void Awake() {
@@ -27,11 +36,18 @@ public class GroundTile : MonoBehaviour
         coords.x = (int) transform.position.x;
         coords.y = (int) transform.position.z;
         SetMaterial();
+        timePassedPlant = spawnTimePlant;
     }
 
     private void Update() {
         if (type == Type.Water) {
             Oscillate();
+        }
+
+        if (!hasPlant) {
+            if (type == Type.Soil) {
+                GrowPlant();
+            }
         }
     }
 
@@ -65,5 +81,28 @@ public class GroundTile : MonoBehaviour
 
     public void Sand() {
         meshRenderer.material = sandMaterial;
+    }
+
+    private void GrowPlant() {
+        int count = plants.Count;
+        int randomPlantIndex = (int) Random.Range(0, count);
+
+        float chance = Random.Range(0f, 1f);  
+        
+        if (timePassedPlant <= spawnTimePlant) {
+            timePassedPlant += Time.deltaTime;
+        }
+
+        else if (timePassedPlant > spawnTimePlant) {
+            Debug.Log("timer");
+            if (chance < chanceTresholdPlant) {
+                Debug.Log("chance");
+                if (plants[randomPlantIndex] != null) {
+                    plant = Instantiate(plants[randomPlantIndex].gameObject, transform.position, Quaternion.identity, transform);
+                }
+                hasPlant = true;
+            }
+            timePassedPlant = 0f;
+        }
     }
 }
