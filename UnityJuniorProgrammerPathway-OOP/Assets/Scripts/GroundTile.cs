@@ -27,7 +27,17 @@ public class GroundTile : MonoBehaviour
         coords.x = (int) transform.position.x;
         coords.y = (int) transform.position.z;
         SetMaterial();
-    }    
+    }
+
+    private void Update() {
+        if (type == Type.Water) {
+            Oscillate();
+        }
+    }
+
+    private void Oscillate() {
+        transform.position = new Vector3 (transform.position.x, - Mathf.PingPong(Time.time / 2, 0.25f), transform.position.z);
+    }
 
     private void SetMaterial() {
         switch(type) {
