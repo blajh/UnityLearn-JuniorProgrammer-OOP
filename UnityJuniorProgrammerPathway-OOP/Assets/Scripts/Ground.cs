@@ -138,7 +138,7 @@ public class Ground : MonoBehaviour
             foreach (GameObject tile in groundTiles) {
                 if (tile.GetComponent<GroundTile>().GetCoords() == new Vector2Int(randomX, randomY)) {
                     if (tile.GetComponent<GroundTile>().GetTileType() == GroundTile.Type.Soil) {
-                        Instantiate(animals[randomAnimalIndex].gameObject, tile.transform.position, Quaternion.identity);
+                        Instantiate(animals[randomAnimalIndex].gameObject, tile.transform.position, Quaternion.identity, transform);
                         animalsCount++;
                     }
                 }
